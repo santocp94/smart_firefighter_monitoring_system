@@ -1,0 +1,212 @@
+body,h1,h2,div,p{
+	font-family: 'Roboto', sans-serif;
+}
+
+nav {
+	padding: 2%;
+}
+
+button {
+    background-color: #24bafe;
+    border: 1px solid #2479fe;
+    border-radius: 5px;
+    padding: 10px 15px;
+	margin: 0px 6px;
+	 color: white;
+}
+
+.valueLabelDiv{
+	width: 70px;
+	padding-left: 2.5%;
+}
+
+.valueDiv{
+	width: 80px;
+}
+
+.styled-select {
+   height: 29px;
+   overflow: hidden;
+   width: 140px;
+   margin-left: 5%;
+   color: white;
+}
+
+.styled-select select {
+   background: transparent;
+   border: none;
+   font-size: 14px;
+   height: 29px;
+   padding: 5px;
+   width: 268px;
+}
+
+.styled-select.slate {
+	height: 34px;
+	width: 240px;
+}
+
+.styled-select.slate select {
+   border: 1px solid #ccc;
+   font-size: 16px;
+   height: 34px;
+   width: 268px;
+}
+
+.semi-square {
+   -webkit-border-radius: 5px;
+   -moz-border-radius: 5px;
+   border-radius: 5px;
+   border-bottom: solid 1px;
+   border-right: solid 1px;
+}
+
+.blue { background-color: #1a79f4; }
+
+.blue select { color: #fff; }
+
+.label {
+	font-weight:bold;
+}
+
+.main {
+	width:100%;
+	height:90%;
+	padding: 2%;
+}
+.split {
+    height: 100%;
+    width: 45%;
+    overflow-x: hidden;
+}
+
+.upper, .lower {
+	float:right;   
+}
+
+.upper {
+	top: 0;
+	height:50%;
+}
+
+.lower {
+	bottom: 0;
+	
+}
+
+.left {
+    left: 0;
+    background-color: #lightblue
+}
+
+.right {
+    right: 0;
+}
+
+.temperature-chart-container {
+    float: left;
+   width:80%;
+   padding-right: 2%;
+}
+
+.heartbeat-chart-container {
+   float: left;
+   width: 80%; 
+   padding-right: 2%;
+}
+
+img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.icon {
+	width:50px;
+	height:50px;
+	left: 0;
+}
+
+.box {
+	border: 2%;
+	border-style: solid;
+	border-color: lightblue;
+}
+
+.bodyArea {
+	height:20%;
+	border: 3%;
+	border-style: solid;
+	border-color: red;
+}
+
+.actuatorIcon {
+	cursor: pointer;
+}
+
+.actuatorIcon:hover {
+	height:55px;
+}
+
+.element{
+	border: 1px solid #ccc;
+	padding: 2%;
+}
+
+.actuator {
+	height:90px;
+}
+
+.devicesArea {
+	width:50%;
+	float:right;
+	height:20px;
+	border: 3%;
+	border-style: solid;
+	border-color: red;
+}
+
+.titleDiv{
+	text-align: center;
+	font-weight: bold;
+}
+
+.addressBox{
+	border-bottom: 2px solid #ddd;
+	margin-bottom: 29px;
+}
+.addressBox div{
+	padding: 20px 50px;
+}
+
+#temperatureChart {
+	display:block;
+}
+
+#heartbeatChart {
+	display:block;
+}
+
+#alarmLog {
+	height: 200px;
+	overflow-y: scroll;
+}
+
+#alarmLogLabel{
+	padding-top: 2%;
+	padding-bottom: 1%;
+	padding-left: 1%;
+	font-weight:bold;
+}
+
+#saveButton {
+	margin-top: 2%;
+}
+
+#placeholderDiv {
+	height: 350px;
+	font-size: 60px;
+	color: #6f7782;
+	text-align: center;
+	vertical-align: bottom;
+	padding-top:10%;
+}

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+ <head>
+ <link rel="stylesheet" type="text/css" href="style/style.css">
+ <script src="script/Script.js"></script>
+ <script src="script/Chart.js"></script>
+  <title> WebSocket Temperature Monitor </title>
+  <meta charset="UTF-8">
+</head> 
+<body>
+<h1>WebSocket Team Monitor</h1> 
+ <div id="containerDiv" class="container">
+ </div>
+ 
+<script>
+for(i = 0; i < 5; i++){
+
+		//external element
+		var mainElement = document.createElement("div");
+		mainElement.className = "main-element";
+		mainElement.id = "main-element" + i;
+		
+		if(i == 0){
+			var teamLeaderLabel = document.createElement("h2");
+			teamLeaderLabel.style.fontWeight = "bold";
+			teamLeaderLabel.style.color = "red";
+			teamLeaderLabel.appendChild(document.createTextNode("Team Leader"));
+			mainElement.appendChild(teamLeaderLabel);
+		}
+			
+		var controlsDiv = document.createElement("div");
+		controlsDiv.className = "controls";
+	
+		var connectionSpan = document.createElement("span");
+		connectionSpan.style.fontWeight = "bold";
+		connectionSpan.appendChild(document.createTextNode("Connection state: "));
+		var connectionStateSpan = document.createElement("span");
+		connectionStateSpan.id = "connectionLabel" + i;
+		connectionStateSpan.dataset.index = i;
+		connectionStateSpan.appendChild(document.createTextNode("Idle"));
+		
+		var addressSpan = document.createElement("span");
+		addressSpan.style.fontWeight = "bold";
+		addressSpan.appendChild(document.createTextNode("Address: "));
+		
+		var addressInput = document.createElement("input");
+		addressInput.setAttribute("type", "text");
+		addressInput.id = "inputIPAddress" + i;
+		var connectButton = document.createElement("button");
+		connectButton.dataset.index = i;
+		connectButton.id = "connectButton" + i;
+		connectButton.addEventListener("click", function() {
+			getAddress(this);
+		}); 
+		connectButton.appendChild(document.createTextNode("Connect"));
+		
+		var timeSpan = document.createElement("span");
+		timeSpan.style.fontWeight = "bold";
+		timeSpan.appendChild(document.createTextNode("Time: "));
+		var timeValueSpan = document.createElement("span");
+		timeValueSpan.id = "timeLabel" + i;
+		timeValueSpan.dataset.index = i;
+		timeValueSpan.appendChild(document.createTextNode("00:00:00"));
+		
+		var temperatureSpan = document.createElement("span");
+		temperatureSpan.style.fontWeight = "bold";
+		temperatureSpan.appendChild(document.createTextNode("Temperature: "));
+		var temperatureValueSpan = document.createElement("span");
+		temperatureValueSpan.id = "temperatureValueLabel" + i;
+		temperatureValueSpan.dataset.index = i;
+		temperatureValueSpan.appendChild(document.createTextNode("0.0"));
+		
+		var heartbeatSpan = document.createElement("span");
+		heartbeatSpan.style.fontWeight = "bold";
+		heartbeatSpan.appendChild(document.createTextNode("Heartbeat: "));
+		var heartbeatValueSpan = document.createElement("span");
+		heartbeatValueSpan.id = "heartbeatValueLabel" + i;
+		heartbeatValueSpan.dataset.index = i;
+		heartbeatValueSpan.appendChild(document.createTextNode("0.0"));
+		
+		controlsDiv.appendChild(connectionSpan);
+		controlsDiv.appendChild(connectionStateSpan);
+		controlsDiv.appendChild(document.createElement("br"));
+		controlsDiv.appendChild(addressSpan);
+		controlsDiv.appendChild(addressInput);
+		controlsDiv.appendChild(connectButton);
+		controlsDiv.appendChild(document.createElement("br"));
+		controlsDiv.appendChild(timeSpan);
+		controlsDiv.appendChild(timeValueSpan);
+		controlsDiv.appendChild(document.createElement("br"));
+		controlsDiv.appendChild(temperatureSpan);
+		controlsDiv.appendChild(temperatureValueSpan);
+		controlsDiv.appendChild(document.createElement("br"));
+		controlsDiv.appendChild(heartbeatSpan);
+		controlsDiv.appendChild(heartbeatValueSpan);
+		controlsDiv.appendChild(document.createElement("br"));
+		
+		//temperature icon
+		var iconDiv = document.createElement("div");
+		iconDiv.className = "iconDiv";
+		var temperatureAlarmA = document.createElement("a");
+		temperatureAlarmA.id = "fireIcon" + i;
+		temperatureAlarmA.className = "alarmIcon teamIcon";
+		var temperatureAlarmIcon = document.createElement("img");
+		temperatureAlarmIcon.src = "img/fire.svg";
+		temperatureAlarmIcon.alt = "fire icon";
+		temperatureAlarmIcon.width = 45;
+		temperatureAlarmIcon.dataset.index = i;
+		temperatureAlarmIcon.dataset.type = "temperatureAlarm";
+		temperatureAlarmA.appendChild(temperatureAlarmIcon);
+		iconDiv.appendChild(temperatureAlarmA);
+		
+		//heartbeat icon
+		var heartbeatAlarmA = document.createElement("a");
+		heartbeatAlarmA.id = "heartbeatIcon" + i;
+		heartbeatAlarmA.className = "alarmIcon teamIcon";
+		var heartbeatAlarmIcon = document.createElement("img");
+		heartbeatAlarmIcon.src = "img/cardiogram.svg";
+		heartbeatAlarmIcon.alt = "heartbeat icon";
+		heartbeatAlarmIcon.width = 45;
+		heartbeatAlarmIcon.dataset.index = i;
+		heartbeatAlarmIcon.dataset.type = "heartbeatAlarm";
+		heartbeatAlarmA.appendChild(heartbeatAlarmIcon);
+		iconDiv.appendChild(heartbeatAlarmA);
+		
+		//leader icon
+		var teamLeaderAlarmA = document.createElement("a");
+		teamLeaderAlarmA.id = "fireIcon" + i;
+		teamLeaderAlarmA.className = "sendAlarmIcon teamLeaderIcon";
+		teamLeaderAlarmA.dataset.index = i;
+		teamLeaderAlarmA.dataset.type = "teamLeaderAlarm";
+		teamLeaderAlarmA.addEventListener("click", function() {
+			sendAlarmToLeader(this);
+		}); 
+		var teamLeaderAlarmIcon = document.createElement("img");
+		teamLeaderAlarmIcon.src = "img/firefighter.svg";
+		teamLeaderAlarmIcon.alt = "teamleader icon";
+		teamLeaderAlarmIcon.width = 45;
+		teamLeaderAlarmA.appendChild(teamLeaderAlarmIcon);
+		iconDiv.appendChild(teamLeaderAlarmA);
+		
+		//team icon
+		var teamAlarmA = document.createElement("a");
+		teamAlarmA.id = "teamIcon" + i;
+		teamAlarmA.className = "sendAlarmIcon teamIcon";
+		teamAlarmA.dataset.index = i;
+		teamAlarmA.dataset.type = "teamAlarm";
+		teamAlarmA.addEventListener("click", function() {
+			broadcastAlarm(this);
+		}); 
+		var teamAlarmIcon = document.createElement("img");
+		teamAlarmIcon.src = "img/team.svg";
+		teamAlarmIcon.alt = "team icon";
+		teamAlarmIcon.width = 45;
+		teamAlarmA.appendChild(teamAlarmIcon);
+		iconDiv.appendChild(teamAlarmA);
+		
+		//temp chart
+		var temperatureChartDiv = document.createElement("div");
+		temperatureChartDiv.className = "temperature-chart-container";
+		temperatureChartDiv.id = "temperatureChartDiv" + i;
+		var temperatureChartCanvas = document.createElement("canvas");
+		temperatureChartCanvas.id = "temperatureChart" + i;
+		temperatureChartDiv.appendChild(temperatureChartCanvas);
+		
+		//heartbeat chart
+		var heartbeatChartDiv = document.createElement("div");
+		heartbeatChartDiv.className = "heartbeat-chart-container";
+		heartbeatChartDiv.id = "heartbeatChartDiv" + i;
+		var heartbeatChartCanvas = document.createElement("canvas");
+		heartbeatChartCanvas.id = "heartbeatChart" + i;
+		heartbeatChartDiv.appendChild(heartbeatChartCanvas);
+		
+		controlsDiv.appendChild(iconDiv);
+		mainElement.appendChild(controlsDiv);
+		controlsDiv.appendChild(document.createElement("br"));
+		mainElement.appendChild(temperatureChartDiv);
+		mainElement.appendChild(heartbeatChartDiv);
+		
+		//ADD the element
+		document.getElementById("containerDiv").appendChild(mainElement);
+		
+		generateTemperatureChart(i)
+		generateHeartbeatChart(i)
+	}
+</script>
+
+<button onclick="alarmLogs()">Alarm log</button>
+<br><ul id="alarmList">
+</ul><br>
+</body>
+</html> 

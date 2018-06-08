@@ -1,0 +1,91 @@
+body,h1,h2,div,p{
+	font-family: 'Roboto', sans-serif;
+}
+.box {
+    margin: 15px 0;
+}
+.box.box-add-member {
+    padding: 20px;
+	border-bottom: 1px solid #ddd;
+	margin-bottom:35px;
+}
+button {
+    background-color: #ffd661;
+    border: 1px solid #dd8c57;
+    border-radius: 5px;
+    padding: 10px 15px;
+    margin: 5px 10px;
+}
+.box.time-temperature {
+    border: 1px solid #ddd;
+    padding: 20px;
+    font-size: 20px;
+}
+h1 {
+    text-align: center;
+}
+
+body {
+    margin: 0px;
+    padding: 25px;
+}
+
+#teamLeaderLabel {
+	font-weight: bold;
+	font-size:20px;
+	color: red;
+	padding-bottom:1%;
+}
+
+.temperature-chart-container {
+    float: left;
+    width: 32%;
+   padding-right: 2%;
+}
+.heartbeat-chart-container {
+   float: left;
+   width: 32%;
+   padding-right: 2%;
+}
+
+.controls {
+    float: left;
+    width: 30%;
+}
+
+.iconDiv{
+	padding-top: 3%;
+}
+
+.main-element{
+	display: inline-block;
+	width: 95%;
+	border: 1px solid #ddd;
+	margin-top: 40px;
+	padding: 2%;
+}
+
+.main-element:first-of-type{
+	border-style: solid;
+	border-width: 5px;
+	border-color: #ff4444;
+	border-radius: 5px;
+}
+.alarmIcon {
+	filter: grayscale(100%);
+	padding: 2%;
+}
+
+.sendAlarmIcon {
+	padding: 5px;
+}
+
+.teamIcon{
+	width: 45px;
+}
+
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}

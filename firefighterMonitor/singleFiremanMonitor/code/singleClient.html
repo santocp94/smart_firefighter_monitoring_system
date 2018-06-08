@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta charset="UTF-8">
+ <title>Firefighter Monitor</title>
+ <script type="text/javascript" src="script/script.js"></script>
+ <script src="script/Chart.js"></script>
+   
+	  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+
+	<link href="style/style.css" rel="stylesheet" type="text/css" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+
+<div id="titleDiv" class="titleDiv">
+	<h1>Firefighter Monitor</h1>
+</div>
+
+<div class="container">
+	<div class="row addressBox">
+
+		<div class="col-4 address">
+			<span style="font-weight:bold">Address: </span>
+			<input type="text" id="inputIPAddress" class="semi-square">
+		</div>
+			
+		<div class="col-5 buttons">
+			<button id="discoverButton" onclick="discover()">Discover</button>
+			<button onclick="openConnection()" id="connectButton" data-index="0">Connect</button>
+		</div>
+		
+		<div class="col-3 state">
+			<span style="font-weight:bold">Connection state: </span><span for=”connectionState″ id="connectionLabel" data-index="0">Idle</span> 
+		</div>
+	</div>
+</div>
+
+<div class="main" id="main">
+	<div class="row">
+		<div class="col-6 label" id="left-col">
+			<h2>Sensors</h2> 
+			<div class="w-100"></div>
+		</div>	
+		<div class="col-6 label" id="right-col">
+			<h2>Actuators</h2>
+		</div>	
+	</div>
+    
+	<div id="placeholderDiv">Press discover button to create components</div>
+	
+	<div > 
+		<div id="alarmLogLabel">Alarm Log</div> 
+		<div id="alarmLog" class="col label element"><ul id="alarmLogList"></div>
+		<button onclick="saveLog()" id="saveButton" data-index="0">Save Log</button>
+	</div>
+</div>	
+</body>
+</html> 
