@@ -77,6 +77,26 @@ function updateChart(value, chart){
 /*Logging function for alarm history.*/
 function alarmLogs(){	
 	console.log(alarmHistory);
+	var A = [];
+	for(var j=0; j<alarmHistory.length; ++j){ 
+		A.push(alarmHistory[j]);
+	}
+	var csvRows = [];
+	for(var i=0; i < A.length; ++i){
+		csvRows.push(A[i].timestamp + " " +A[i].type + " " + A[i].sender + " " + A[i].level +",");
+	}
+	var csvString = csvRows.join("\n");
+	if (window.navigator.msSaveOrOpenBlob) {
+		var blob = new Blob([csvString]);
+		window.navigator.msSaveOrOpenBlob(blob, 'TeamAlarmLogFile.csv');
+	} else {
+		var a         = document.createElement('a');
+		a.href        = 'data:attachment/csv,' +  encodeURIComponent(csvString);
+		a.target      = '_blank';
+		a.download    = 'TeamAlarmLogFile.csv';
+		document.body.appendChild(a);
+		a.click();
+	}
 }
 
 /*Function that broadcasts an alarm to all team members.*/
