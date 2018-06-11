@@ -56,18 +56,20 @@ function verifyAlarm(obj, index){
 	var type = sensors[index].name;
 	var alarmEntry;
 		
-	if(type == "temperature"){
+	if(type == "temperature" && obj >= temperatureThreshold){
 		appendAlarmInLog(type, obj);
 		document.getElementById("sensor" + index).style.backgroundColor = "rgba(255, 0, 10, 0.3)";
 		alarmEntry = {type:type, value:obj};
 		alarmHistory.push(alarmEntry);
-	} else if(type == "heartbeat"){
-		if(obj >= heartbeatThreshold || obj <= heartbeatLowThreshold){
+	} else if(type == "heartbeat"|| obj <= heartbeatLowThreshold){
+		if(obj >= heartbeatThreshold ){
 			appendAlarmInLog(type, obj);
 			alarmEntry = {type:type, value:obj};
 			alarmHistory.push(alarmEntry);
-		}
-		document.getElementById("sensor" + index).style.backgroundColor = "rgba(255, 0, 10, 0.3)";
+			document.getElementById("sensor" + index).style.backgroundColor = "rgba(255, 0, 10, 0.3)";
+		} else {
+		document.getElementById("sensor" + index).style.backgroundColor = "white";
+	}
 	} else {
 		document.getElementById("sensor" + index).style.backgroundColor = "white";
 	}
@@ -147,6 +149,27 @@ function discoverTasks(){
 /*Logging function for alarms.*/
 function saveLog(){
 	console.log(alarmHistory);
+	
+	var A = [];
+	for(var j=0; j<alarmHistory.length; ++j){ 
+		A.push(alarmHistory[j]);
+	}
+	var csvRows = [];
+	for(var i=0; i < A.length; ++i){
+		csvRows.push(A[i].type + " " + A[i].value + ",");
+	}
+	var csvString = csvRows.join("\n");
+	if (window.navigator.msSaveOrOpenBlob) {
+		var blob = new Blob([csvString]);
+		window.navigator.msSaveOrOpenBlob(blob, 'AlarmLogFile.csv');
+	} else {
+		var a         = document.createElement('a');
+		a.href        = 'data:attachment/csv,' +  encodeURIComponent(csvString);
+		a.target      = '_blank';
+		a.download    = 'AlarmLogFile.csv';
+		document.body.appendChild(a);
+		a.click();
+	}
 }
 
 /*Function that create the graphic components according to the discoverd devices.*/
